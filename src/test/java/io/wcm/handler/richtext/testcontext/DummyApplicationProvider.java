@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 wcm.io
+ * Copyright (C) 2017 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,26 +19,27 @@
  */
 package io.wcm.handler.richtext.testcontext;
 
-import java.util.List;
+import static io.wcm.handler.richtext.testcontext.AppAemContext.APPLICATION_ID;
 
 import org.apache.sling.api.resource.Resource;
 
-import com.google.common.collect.ImmutableList;
-
-import io.wcm.handler.media.spi.MediaHandlerConfig;
-import io.wcm.handler.media.spi.MediaSource;
+import io.wcm.caconfig.application.spi.ApplicationProvider;
 
 /**
- * Dummy media configuration
+ * TODO: get rid of dependency to ApplicationProvider
+ * @deprecated Get rid of application support
  */
-public class DummyMediaHandlerConfig extends MediaHandlerConfig {
-
-  private static final List<Class<? extends MediaSource>> MEDIA_SOURCES =
-      ImmutableList.<Class<? extends MediaSource>>of();
+@Deprecated
+public class DummyApplicationProvider implements ApplicationProvider {
 
   @Override
-  public List<Class<? extends MediaSource>> getSources() {
-    return MEDIA_SOURCES;
+  public String getApplicationId() {
+    return APPLICATION_ID;
+  }
+
+  @Override
+  public String getLabel() {
+    return APPLICATION_ID;
   }
 
   @Override
