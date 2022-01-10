@@ -54,6 +54,10 @@ To use this module you have to deploy also:
 | [wcm.io Link Handler](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link) |
 
 
+### GitHub Repository
+
+Sources: https://github.com/wcm-io/io.wcm.handler.richtext
+
 
 [usage]: usage.html
 [general-concepts]: general-concepts.html
