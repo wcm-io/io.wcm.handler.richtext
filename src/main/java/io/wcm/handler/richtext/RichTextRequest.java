@@ -110,7 +110,7 @@ public final class RichTextRequest {
   public @NotNull ValueMap getResourceProperties() {
     if (this.resourceProperties == null) {
       // create a copy of the original map
-      this.resourceProperties = new ValueMapDecorator(new HashMap<String, Object>());
+      this.resourceProperties = new ValueMapDecorator(new HashMap<>());
       if (this.resource != null) {
         this.resourceProperties.putAll(resource.getValueMap());
       }
