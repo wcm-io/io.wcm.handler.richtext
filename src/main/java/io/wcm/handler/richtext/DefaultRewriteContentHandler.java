@@ -217,8 +217,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     if (link.isValid()) {
       return link.getAnchor();
     }
-    else if (element.getAttributeValue("name") != null && element.getAttributeValue("src") == null) {
+    else if ((element.getAttributeValue("id") != null || element.getAttributeValue("name") != null) && element.getAttributeValue("src") == null) {
       // not a valid link, but it seems to be a named anchor - keep it
+      // support both id attribute (valid in HTML4+HTML5) and the name attribute (only valid in HTML4)
       return element;
     }
     else {

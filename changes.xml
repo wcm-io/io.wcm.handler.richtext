@@ -27,6 +27,9 @@
       <action type="update" dev="sseifert">
         Switch to AEM 6.5.7 as minimum version.
       </action>
+      <action type="fix" dev="sseifert">
+        DefaultRewriteContentHandler: Preserve named anchors with only "id" attribute.
+      </action>
     </release>
 
     <release version="1.5.8" date="2021-12-18">
