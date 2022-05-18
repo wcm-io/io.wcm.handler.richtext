@@ -37,7 +37,7 @@ final class XHtmlEntityResolver implements EntityResolver {
 
   private static final XHtmlEntityResolver INSTANCE = new XHtmlEntityResolver();
 
-  private final Map<String, String> xhtmlResourceMap = new HashMap<String, String>();
+  private final Map<String, String> xhtmlResourceMap = new HashMap<>();
   private final String resourceFolder = "/" + getClass().getPackage().getName().replace('.', '/') + "/xhtml";
 
   private XHtmlEntityResolver() {

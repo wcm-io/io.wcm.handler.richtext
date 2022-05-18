@@ -203,7 +203,7 @@ public final class RichTextUtil {
 
     // iterate through content list and build new content list
     List<Content> originalContent = parent.getContent();
-    List<Content> newContent = new ArrayList<Content>();
+    List<Content> newContent = new ArrayList<>();
     for (Content contentElement : originalContent) {
 
       // handle element

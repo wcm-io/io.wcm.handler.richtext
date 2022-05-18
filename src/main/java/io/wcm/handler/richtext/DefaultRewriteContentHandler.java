@@ -109,6 +109,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    *         Return list with other content to replace element with new content.
    */
   @Override
+  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
   public List<Content> rewriteElement(@NotNull Element element) {
 
     // rewrite anchor elements
@@ -125,7 +126,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     // since the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
     else if (StringUtils.equalsIgnoreCase(element.getName(), "br")) {
-      if (element.getContent().size() > 0) {
+      if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
       return null;
@@ -165,7 +166,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     Element anchorElement = buildAnchorElement(link, element);
 
     // Replace anchor tag or remove anchor tag if invalid - add any sub-content in every case
-    List<Content> content = new ArrayList<Content>();
+    List<Content> content = new ArrayList<>();
     if (anchorElement != null) {
       anchorElement.addContent(element.cloneContent());
       content.add(anchorElement);
@@ -216,8 +217,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     if (link.isValid()) {
       return link.getAnchor();
     }
-    else if (element.getAttributeValue("name") != null && element.getAttributeValue("src") == null) {
+    else if ((element.getAttributeValue("id") != null || element.getAttributeValue("name") != null) && element.getAttributeValue("src") == null) {
       // not a valid link, but it seems to be a named anchor - keep it
+      // support both id attribute (valid in HTML4+HTML5) and the name attribute (only valid in HTML4)
       return element;
     }
     else {
@@ -337,7 +339,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
         JSONArray valueArray = metadata.optJSONArray(metadataPropertyName);
         if (valueArray != null) {
           // store array values
-          List<String> values = new ArrayList<String>();
+          List<String> values = new ArrayList<>();
           for (int j = 0; j < valueArray.length(); j++) {
             values.add(valueArray.optString(j));
           }
@@ -404,7 +406,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     Element imageElement = buildImageElement(media, element);
 
     // return modified element
-    List<Content> content = new ArrayList<Content>();
+    List<Content> content = new ArrayList<>();
     if (imageElement != null) {
       content.add(imageElement);
     }
@@ -477,6 +479,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   }
 
   @Override
+  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
   public List<Content> rewriteText(@NotNull Text text) {
     // nothing to do with text element
     return null;

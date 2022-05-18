@@ -85,8 +85,11 @@ class RichTextHandlerImplTest {
       + "<A href=\"http://www.jodelkaiser.de\" target=\"_blank\">ötztal</A> "
       + "ist wieder daheim.</P>";
 
-  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR = "<p><a name=\"anchor1\" id=\"anchor1\"></a>Der Jodelkaiser</p>";
-  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR_REWRITTEN = "<p><a name=\"anchor1\" id=\"anchor1\"></a>Der Jodelkaiser</p>";
+  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR_NAME = "<p><a name=\"anchor1\"></a>Der Jodelkaiser</p>";
+  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR_NAME_REWRITTEN = "<p><a name=\"anchor1\"></a>Der Jodelkaiser</p>";
+
+  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR_ID = "<p><a id=\"anchor1\"></a>Der Jodelkaiser</p>";
+  private static final String RICHTEXT_FRAGMENT_NAMED_ANCHOR_ID_REWRITTEN = "<p><a id=\"anchor1\"></a>Der Jodelkaiser</p>";
 
   private static final String PLAINTEXT_FRAGMENT = "Der Jodelkaiser\naus dem Ötztal\nist wieder daheim.";
   private static final String PLAINTEXT_FRAGMENT_REWRITTEN = "Der Jodelkaiser<br />aus dem Ötztal<br />ist wieder daheim.";
@@ -131,10 +134,17 @@ class RichTextHandlerImplTest {
   }
 
   @Test
-  void testContent_NamedAnchor() {
+  void testContent_NamedAnchor_Name() {
     RichTextHandler richTextHandler = AdaptTo.notNull(adaptable(), RichTextHandler.class);
-    RichText richText = richTextHandler.get(RICHTEXT_FRAGMENT_NAMED_ANCHOR).build();
-    assertEquals(RICHTEXT_FRAGMENT_NAMED_ANCHOR_REWRITTEN, richText.getMarkup());
+    RichText richText = richTextHandler.get(RICHTEXT_FRAGMENT_NAMED_ANCHOR_NAME).build();
+    assertEquals(RICHTEXT_FRAGMENT_NAMED_ANCHOR_NAME_REWRITTEN, richText.getMarkup());
+  }
+
+  @Test
+  void testContent_NamedAnchor_Id() {
+    RichTextHandler richTextHandler = AdaptTo.notNull(adaptable(), RichTextHandler.class);
+    RichText richText = richTextHandler.get(RICHTEXT_FRAGMENT_NAMED_ANCHOR_ID).build();
+    assertEquals(RICHTEXT_FRAGMENT_NAMED_ANCHOR_ID_REWRITTEN, richText.getMarkup());
   }
 
   @Test

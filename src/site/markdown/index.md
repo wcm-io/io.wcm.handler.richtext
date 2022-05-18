@@ -31,7 +31,8 @@ Read the [general concepts][general-concepts] to get an overview of the function
 
 |RichText Handler version |AEM version supported
 |-------------------------|----------------------
-|1.5.x or higher          |AEM 6.4.5+, AEMaaCS
+|1.6.x or higher          |AEM 6.5.7+, AEMaaCS
+|1.5.x                    |AEM 6.4.5+, AEMaaCS
 |1.4.x                    |AEM 6.3.3+, AEM 6.4.5+
 |1.2.x - 1.3.x            |AEM 6.2+
 |1.0.x - 1.1.x            |AEM 6.1+
@@ -52,6 +53,10 @@ To use this module you have to deploy also:
 | [wcm.io Media Handler](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.media) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.media/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.media) |
 | [wcm.io Link Handler](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.handler.link) |
 
+
+### GitHub Repository
+
+Sources: https://github.com/wcm-io/io.wcm.handler.richtext
 
 
 [usage]: usage.html
