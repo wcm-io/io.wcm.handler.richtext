@@ -256,8 +256,6 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
             }
           }
           else {
-            // decode if required
-            value = decodeIfEncoded(value);
             resourceProps.put(property, value);
           }
           foundAny = true;
