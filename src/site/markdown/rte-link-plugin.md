@@ -61,6 +61,8 @@ For a complete example see [richTextConfig.json][rte-full-example].
 
 If you want to customize the link plugin dialog you have to create your own custom RTE link plugin that inherits from the wcm.io RichText Handler link plugin. Then you can override some of the methods that control which fields are displayed for each link type or all link types.
 
+By default, custom link types are not shown in the dropdown for link type selection of the RTE link dialog. In your custom link type class extending [LinkType][link-handler-linktype], you have to return `true` in the method `hasRichTextPlugin()`.
+
 Example for a custom `linkPlugin.js`:
 
 ```js
@@ -134,3 +136,4 @@ For more details have a look into the [sources of the wcm.io RichText Handler li
 [link-handler]: ../link/
 [rte-full-example]: https://github.com/wcm-io/wcm-io-samples/blob/develop/bundles/core/src/main/webapp/app-root/components/global/include/richTextConfig.json
 [rte-link-plugin-sources]: https://github.com/wcm-io/io.wcm.handler.richtext/tree/develop/src/main/webapp/app-root/clientlibs/rte.plugins/js
+[link-handler-linktype]: https://wcm.io/handler/link/apidocs/io/wcm/handler/link/spi/LinkType.html
