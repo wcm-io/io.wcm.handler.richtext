@@ -79,8 +79,8 @@ Example for a custom `linkPlugin.js`:
 
     initializeUI: function (tbGenerator) {
       // register icon for this plugins toolbar actions
-      tbGenerator.registerIcon("myproject.links#modifylink", "link");
-      tbGenerator.registerIcon("myproject.links#unlink", "linkOff");
+      tbGenerator.registerIcon("myproject-links#modifylink", "link");
+      tbGenerator.registerIcon("myproject-links#unlink", "linkOff");
       // call the "super" method
       this.inherited(arguments);
     }
@@ -90,7 +90,7 @@ Example for a custom `linkPlugin.js`:
 })(window.jQuery);
 
 // register plugin
-CUI.rte.plugins.PluginRegistry.register("myproject.links", myproject.rte.plugins.LinkPlugin);
+CUI.rte.plugins.PluginRegistry.register("myproject-links", myproject.rte.plugins.LinkPlugin);
 ```
 
 Example for a custom `linkDialog.js`:
