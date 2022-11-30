@@ -133,4 +133,4 @@ For more details have a look into the [sources of the wcm.io RichText Handler li
 [aem-rte]: https://helpx.adobe.com/experience-manager/6-4/sites/administering/using/rich-text-editor.html
 [link-handler]: ../link/
 [rte-full-example]: https://github.com/wcm-io/wcm-io-samples/blob/develop/bundles/core/src/main/webapp/app-root/components/global/include/richTextConfig.json
-[rte-link-plugin-sources]: https://github.com/wcm-io/wcm-io-handler/tree/develop/richtext/src/main/webapp/app-root/clientlibs/rte.plugins/js
+[rte-link-plugin-sources]: https://github.com/wcm-io/io.wcm.handler.richtext/tree/develop/src/main/webapp/app-root/clientlibs/rte.plugins/js
