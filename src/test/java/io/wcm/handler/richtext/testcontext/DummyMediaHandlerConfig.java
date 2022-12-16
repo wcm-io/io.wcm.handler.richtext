@@ -19,9 +19,8 @@
  */
 package io.wcm.handler.richtext.testcontext;
 
+import java.util.Collections;
 import java.util.List;
-
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.handler.media.spi.MediaHandlerConfig;
 import io.wcm.handler.media.spi.MediaSource;
@@ -32,8 +31,7 @@ import io.wcm.handler.media.spi.MediaSource;
 @SuppressWarnings("null")
 public class DummyMediaHandlerConfig extends MediaHandlerConfig {
 
-  private static final List<Class<? extends MediaSource>> MEDIA_SOURCES =
-      ImmutableList.<Class<? extends MediaSource>>of();
+  private static final List<Class<? extends MediaSource>> MEDIA_SOURCES = Collections.emptyList();
 
   @Override
   public List<Class<? extends MediaSource>> getSources() {

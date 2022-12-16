@@ -24,8 +24,6 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.google.common.collect.ImmutableList;
-
 import io.wcm.handler.richtext.DefaultRewriteContentHandler;
 import io.wcm.handler.richtext.util.RewriteContentHandler;
 import io.wcm.sling.commons.caservice.ContextAwareService;
@@ -38,7 +36,7 @@ import io.wcm.sling.commons.caservice.ContextAwareService;
 @ConsumerType
 public abstract class RichTextHandlerConfig implements ContextAwareService {
 
-  private static final List<Class<? extends RewriteContentHandler>> DEFAULT_REWRITE_CONTENT_HANDLERS = ImmutableList.<Class<? extends RewriteContentHandler>>of(
+  private static final List<Class<? extends RewriteContentHandler>> DEFAULT_REWRITE_CONTENT_HANDLERS = List.of(
       DefaultRewriteContentHandler.class);
 
   /**

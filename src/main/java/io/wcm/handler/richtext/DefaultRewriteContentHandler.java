@@ -48,7 +48,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.day.cq.commons.jcr.JcrConstants;
-import com.google.common.collect.ImmutableSet;
 
 import io.wcm.handler.link.Link;
 import io.wcm.handler.link.LinkHandler;
@@ -88,7 +87,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   /**
    * List of all tag names that should not be rendered "self-closing" to avoid interpretation errors in browsers
    */
-  private static final Set<String> NONSELFCLOSING_TAGS = ImmutableSet.of(
+  private static final Set<String> NONSELFCLOSING_TAGS = Set.of(
       "div",
       "span",
       "strong",

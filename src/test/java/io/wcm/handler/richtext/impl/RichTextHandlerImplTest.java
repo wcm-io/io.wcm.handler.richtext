@@ -34,8 +34,6 @@ import org.jdom2.Text;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.google.common.collect.ImmutableList;
-
 import io.wcm.handler.richtext.DefaultRewriteContentHandler;
 import io.wcm.handler.richtext.RichText;
 import io.wcm.handler.richtext.RichTextHandler;
@@ -180,8 +178,7 @@ class RichTextHandlerImplTest {
     context.registerService(RichTextHandlerConfig.class, new RichTextHandlerConfig() {
       @Override
       public List<Class<? extends RewriteContentHandler>> getRewriteContentHandlers() {
-        return ImmutableList.<Class<? extends RewriteContentHandler>>of(
-            DefaultRewriteContentHandler.class, CustomRewriteContentHandler.class);
+        return List.of(DefaultRewriteContentHandler.class, CustomRewriteContentHandler.class);
       }
     });
 
@@ -202,7 +199,7 @@ class RichTextHandlerImplTest {
 
     @Override
     public List<Content> rewriteText(Text text) {
-      return ImmutableList.<Content>of(new Text(text.getText().toLowerCase()));
+      return List.of(new Text(text.getText().toLowerCase()));
     }
 
   }

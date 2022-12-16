@@ -20,6 +20,7 @@
 package io.wcm.handler.richtext.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.handler.richtext.RichText;
 import io.wcm.handler.richtext.RichTextBuilder;
@@ -122,7 +122,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
 
   private List<Content> processRichText(String text) {
     if (isEmpty(text)) {
-      return ImmutableList.of();
+      return Collections.emptyList();
     }
 
     // Parse text
@@ -136,20 +136,20 @@ public final class RichTextHandlerImpl implements RichTextHandler {
       }
 
       // return xhtml elements
-      return ImmutableList.copyOf(contentParent.cloneContent());
+      return List.copyOf(contentParent.cloneContent());
     }
     catch (JDOMException ex) {
       if (log.isDebugEnabled()) {
         log.debug("Unable to parse XHTML text."
             + (currentPage != null ? " Current page is " + currentPage.getPath() + "." : ""), ex);
       }
-      return ImmutableList.of();
+      return Collections.emptyList();
     }
   }
 
   private List<Content> processPlainText(String text) {
     if (StringUtils.isBlank(text)) {
-      return ImmutableList.of();
+      return Collections.emptyList();
     }
 
     List<Content> content = new ArrayList<>();
@@ -161,7 +161,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
       content.add(new Text(lines[i]));
     }
 
-    return ImmutableList.copyOf(content);
+    return List.copyOf(content);
   }
 
   @Override
