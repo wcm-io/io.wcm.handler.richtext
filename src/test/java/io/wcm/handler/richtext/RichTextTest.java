@@ -25,14 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jdom2.Content;
 import org.jdom2.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.handler.commons.dom.Div;
 import io.wcm.handler.commons.dom.Span;
@@ -47,8 +46,9 @@ class RichTextTest {
   }
 
   @Test
+  @SuppressWarnings("null")
   void testWithContent() {
-    List<Content> content = ImmutableList.<Content>of(new Span("wurst"), new Text("  "), new Div().setCssClass("abc"));
+    List<Content> content = List.of(new Span("wurst"), new Text("  "), new Div().setCssClass("abc"));
     RichText underTest = new RichText(richTextRequest, content);
 
     assertSame(richTextRequest, underTest.getRichTextRequest());
@@ -59,7 +59,7 @@ class RichTextTest {
 
   @Test
   void testWithoutContent() {
-    RichText underTest = new RichText(richTextRequest, ImmutableList.<Content>of());
+    RichText underTest = new RichText(richTextRequest, Collections.emptyList());
 
     assertFalse(underTest.isValid());
     assertTrue(underTest.getContent().isEmpty());
