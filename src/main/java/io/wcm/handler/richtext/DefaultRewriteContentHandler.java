@@ -19,22 +19,23 @@
  */
 package io.wcm.handler.richtext;
 
-import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.commons.json.JSONArray;
-import org.apache.sling.commons.json.JSONException;
-import org.apache.sling.commons.json.JSONObject;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -48,6 +49,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.day.cq.commons.jcr.JcrConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.wcm.handler.link.Link;
 import io.wcm.handler.link.LinkHandler;
@@ -68,7 +72,6 @@ import io.wcm.wcm.commons.contenttype.FileExtension;
  * Default implementation of {@link RewriteContentHandler}.
  */
 @Model(adaptables = { SlingHttpServletRequest.class, Resource.class })
-@SuppressWarnings("deprecation")
 public final class DefaultRewriteContentHandler implements RewriteContentHandler {
 
   @Self
@@ -83,6 +86,10 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   private MediaHandler mediaHandler;
 
   private static final Logger log = LoggerFactory.getLogger(DefaultRewriteContentHandler.class);
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  private static final TypeReference<HashMap<String, Object>> MAP_TYPE_REFERENCE = new TypeReference<HashMap<String, Object>>() {
+    // type reference
+  };
 
   /**
    * List of all tag names that should not be rendered "self-closing" to avoid interpretation errors in browsers
@@ -243,15 +250,11 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
           String property = DataPropertyUtil.toHeadlessCamelCaseName(attribute.getName());
           if (StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) {
             try {
-              JSONArray jsonArray = new JSONArray(value);
-              String[] values = new String[jsonArray.length()];
-              for (int i = 0; i < jsonArray.length(); i++) {
-                values[i] = jsonArray.optString(i);
-              }
+              String[] values = OBJECT_MAPPER.readValue(value, String[].class);
               resourceProps.put(property, values);
             }
-            catch (JSONException ex) {
-              // ignore
+            catch (JsonProcessingException ex) {
+              log.debug("Unable to parse JSON array: {}", value, ex);
             }
           }
           else {
@@ -273,24 +276,24 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   private boolean getAnchorLegacyMetadataFromSingleData(ValueMap resourceProps, Element element) {
     boolean foundAny = false;
 
-    JSONObject metadata = null;
+    Map<String, Object> metadata = null;
     Attribute dataAttribute = element.getAttribute("data");
     if (dataAttribute != null) {
       String metadataString = dataAttribute.getValue();
       if (StringUtils.isNotEmpty(metadataString)) {
         try {
-          metadata = new JSONObject(metadataString);
+          metadata = OBJECT_MAPPER.readValue(metadataString, MAP_TYPE_REFERENCE);
         }
-        catch (JSONException ex) {
+        catch (JsonProcessingException ex) {
           log.debug("Invalid link metadata: {}", metadataString, ex);
         }
       }
     }
     if (metadata != null) {
-      JSONArray names = metadata.names();
-      for (int i = 0; i < names.length(); i++) {
-        String name = names.optString(i);
-        resourceProps.put(name, metadata.opt(name));
+      Iterator<Map.Entry<String, Object>> entries = metadata.entrySet().iterator();
+      while (entries.hasNext()) {
+        Map.Entry<String, Object> entry = entries.next();
+        resourceProps.put(entry.getKey(), entry.getValue());
         foundAny = true;
       }
     }
@@ -312,42 +315,48 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     }
 
     // get link metadata from rel element
-    JSONObject metadata = null;
+    Map<String, Object> metadata = null;
     String metadataString = element.getAttributeValue("rel");
     if (StringUtils.isNotEmpty(metadataString)) {
       try {
-        metadata = new JSONObject(metadataString);
+        metadata = OBJECT_MAPPER.readValue(metadataString, MAP_TYPE_REFERENCE);
       }
-      catch (JSONException ex) {
+      catch (JsonProcessingException ex) {
         log.debug("Invalid link metadata: {}", metadataString, ex);
       }
     }
     if (metadata == null) {
-      metadata = new JSONObject();
+      metadata = new HashMap<>();
     }
 
     // transform link metadata to virtual JCR resource with JCR properties
-    JSONArray metadataPropertyNames = metadata.names();
-    if (metadataPropertyNames != null) {
-      for (int i = 0; i < metadataPropertyNames.length(); i++) {
-        String metadataPropertyName = metadataPropertyNames.optString(i);
+    Iterator<Map.Entry<String, Object>> entries = metadata.entrySet().iterator();
+    while (entries.hasNext()) {
+      Map.Entry<String, Object> entry = entries.next();
+      String metadataPropertyName = entry.getKey();
+      Object value = entry.getValue();
 
+      // check if value is collection
+      if (value != null) {
+        if (value instanceof Collection) {
+          resourceProps.put(metadataPropertyName, ((Collection)value).toArray());
+        }
         // check if value is array
-        JSONArray valueArray = metadata.optJSONArray(metadataPropertyName);
-        if (valueArray != null) {
+        else if (value.getClass().isArray()) {
           // store array values
           List<String> values = new ArrayList<>();
-          for (int j = 0; j < valueArray.length(); j++) {
-            values.add(valueArray.optString(j));
+          int arrayLength = Array.getLength(value);
+          for (int j = 0; j < arrayLength; j++) {
+            Object arrayItem = Array.get(value, j);
+            if (arrayItem != null) {
+              values.add(arrayItem.toString());
+            }
           }
-          resourceProps.put(metadataPropertyName, values.toArray(new String[0]));
+          resourceProps.put(metadataPropertyName, values.toArray());
         }
         else {
           // store simple value
-          Object value = metadata.opt(metadataPropertyName);
-          if (value != null) {
-            resourceProps.put(metadataPropertyName, value);
-          }
+          resourceProps.put(metadataPropertyName, value);
         }
       }
     }
@@ -465,12 +474,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    */
   private String decodeIfEncoded(String value) {
     if (StringUtils.contains(value, "%")) {
-      try {
-        return URLDecoder.decode(value, CharEncoding.UTF_8);
-      }
-      catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex);
-      }
+      return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
     return value;
   }

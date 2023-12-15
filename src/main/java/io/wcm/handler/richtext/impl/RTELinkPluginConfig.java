@@ -66,6 +66,8 @@ public class RTELinkPluginConfig extends SlingSafeMethodsServlet {
 
   static final String SELECTOR = "wcmio-handler-richtext-rte-plugins-links-config";
 
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
   @Override
   protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response) throws ServletException, IOException {
 
@@ -102,7 +104,7 @@ public class RTELinkPluginConfig extends SlingSafeMethodsServlet {
     result.linkTypes = linkTypesConfigs;
     result.rootPaths = rootPaths;
     response.setContentType(ContentType.JSON);
-    response.getWriter().write(new ObjectMapper().writeValueAsString(result));
+    response.getWriter().write(OBJECT_MAPPER.writeValueAsString(result));
   }
 
   private String getI18nText(String key, I18n i18n) {
