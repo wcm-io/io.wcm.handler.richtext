@@ -199,6 +199,7 @@ public final class RichTextUtil {
    * @param parent Parent element
    * @param rewriteContentHandler Rewrite content handler
    */
+  @SuppressWarnings("PMD.EmptyControlStatement")
   public static void rewriteContent(@NotNull Element parent, @NotNull RewriteContentHandler rewriteContentHandler) {
 
     // iterate through content list and build new content list

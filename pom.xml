@@ -25,13 +25,13 @@
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.parent_toplevel</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.8</version>
     <relativePath/>
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.handler.richtext</artifactId>
-  <version>1.6.4</version>
+  <version>1.6.6</version>
   <packaging>jar</packaging>
 
   <name>RichText Handler</name>
@@ -49,7 +49,7 @@
     <site.url.module.prefix>handler/richtext</site.url.module.prefix>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2023-04-19T11:18:11Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-12-18T11:23:10Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
@@ -137,7 +137,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
-      <version>5.2.0</version>
+      <version>5.4.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -181,6 +181,11 @@
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <version>1.5.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
       <scope>test</scope>
     </dependency>
 
