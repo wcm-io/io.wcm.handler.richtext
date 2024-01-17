@@ -30,6 +30,7 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.RequestAttribute;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.jetbrains.annotations.Nullable;
 
 import io.wcm.handler.richtext.RichTextBuilder;
 import io.wcm.handler.richtext.RichTextHandler;
@@ -88,7 +89,7 @@ public class ResourceRichText {
    * Returns the formatted text as XHTML markup.
    * @return Rich text markup
    */
-  public String getMarkup() {
+  public @Nullable String getMarkup() {
     return markup;
   }
 

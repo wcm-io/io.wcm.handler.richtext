@@ -116,7 +116,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    */
   @Override
   @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
-  public List<Content> rewriteElement(@NotNull Element element) {
+  public @Nullable List<Content> rewriteElement(@NotNull Element element) {
 
     // rewrite anchor elements
     if (StringUtils.equalsIgnoreCase(element.getName(), "a")) {
@@ -481,7 +481,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
   @Override
   @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
-  public List<Content> rewriteText(@NotNull Text text) {
+  public @Nullable List<Content> rewriteText(@NotNull Text text) {
     // nothing to do with text element
     return null;
   }

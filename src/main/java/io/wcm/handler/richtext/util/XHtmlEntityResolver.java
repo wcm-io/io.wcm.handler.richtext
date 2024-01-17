@@ -25,6 +25,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -51,7 +52,7 @@ final class XHtmlEntityResolver implements EntityResolver {
    * XHtmlEntityResolver instance.
    * @return XHtmlEntityResolver instance.
    */
-  public static XHtmlEntityResolver getInstance() {
+  public static @NotNull XHtmlEntityResolver getInstance() {
     return INSTANCE;
   }
 
