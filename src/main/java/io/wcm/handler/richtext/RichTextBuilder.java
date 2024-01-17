@@ -41,7 +41,7 @@ public interface RichTextBuilder {
    * @return Rich text builder
    */
   @NotNull
-  RichTextBuilder textMode(TextMode textMode);
+  RichTextBuilder textMode(@Nullable TextMode textMode);
 
   /**
    * Set media arguments to be applied when resolving inline images.
@@ -49,7 +49,7 @@ public interface RichTextBuilder {
    * @return Rich text builder
    */
   @NotNull
-  RichTextBuilder mediaArgs(MediaArgs mediaArgs);
+  RichTextBuilder mediaArgs(@Nullable MediaArgs mediaArgs);
 
   /**
    * Set URL mode to be applied for building URLs for inline links and inline images.
@@ -57,7 +57,7 @@ public interface RichTextBuilder {
    * @return Rich text builder
    */
   @NotNull
-  RichTextBuilder urlMode(UrlMode urlMode);
+  RichTextBuilder urlMode(@Nullable UrlMode urlMode);
 
   /**
    * Build formatted markup and return metadata object containing results.

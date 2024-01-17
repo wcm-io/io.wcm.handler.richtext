@@ -36,6 +36,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Text;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,12 +74,12 @@ public final class RichTextHandlerImpl implements RichTextHandler {
   private List<RewriteContentHandler> rewriteContentHandlers;
 
   @Override
-  public @NotNull RichTextBuilder get(Resource resource) {
+  public @NotNull RichTextBuilder get(@Nullable Resource resource) {
     return new RichTextBuilderImpl(resource, this);
   }
 
   @Override
-  public @NotNull RichTextBuilder get(String text) {
+  public @NotNull RichTextBuilder get(@Nullable String text) {
     return new RichTextBuilderImpl(text, this);
   }
 
@@ -165,7 +166,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
   }
 
   @Override
-  public boolean isEmpty(String text) {
+  public boolean isEmpty(@Nullable String text) {
     return RichTextUtil.isEmpty(text);
   }
 

@@ -57,6 +57,7 @@ class RichTextTest {
     assertEquals("<span>wurst</span>  <div class=\"abc\"></div>", underTest.getMarkup());
   }
 
+  @SuppressWarnings("null")
   @Test
   void testWithoutContent() {
     RichText underTest = new RichText(richTextRequest, Collections.emptyList());
