@@ -178,7 +178,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
         for (Class<? extends RewriteContentHandler> clazz : config.getRewriteContentHandlers()) {
           RewriteContentHandler rewriter = adaptable.adaptTo(clazz);
           if (rewriter == null) {
-            throw new RuntimeException("Unable to adapt " + adaptable.getClass() + " to " + clazz.getName() + ". "
+            throw new IllegalStateException("Unable to adapt " + adaptable.getClass() + " to " + clazz.getName() + ". "
                 + "Make sure the class is a Sling Model and adaptable from Resource and SlingHttpServletRequest.");
           }
           rewriteContentHandlers.add(rewriter);

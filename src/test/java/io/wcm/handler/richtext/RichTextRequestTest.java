@@ -70,8 +70,8 @@ class RichTextRequestTest {
 
   @Test
   void testWithBoth() {
+    Resource resource = context.create().resource("/test/resource");
     assertThrows(IllegalArgumentException.class, () -> {
-      Resource resource = context.create().resource("/test/resource");
       new RichTextRequest(resource, "text", null, null, null);
     });
   }

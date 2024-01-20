@@ -157,7 +157,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    *         Return empty list to remove this element.
    *         Return list with other content to replace element with new content.
    */
-  private List<Content> rewriteAnchor(Element element) {
+  private List<Content> rewriteAnchor(@NotNull Element element) {
 
     // detect empty anchor elements and insert at least an empty string to avoid "self-closing" elements
     // that are not handled correctly by most browsers
@@ -239,6 +239,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param element Link element
    * @return true if any metadata attribute was found
    */
+  @SuppressWarnings("java:S3776") // ignore complexity
   private boolean getAnchorMetadataFromData(ValueMap resourceProps, Element element) {
     boolean foundAny = false;
 
@@ -306,6 +307,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param resourceProps ValueMap to write link metadata to
    * @param element Link element
    */
+  @SuppressWarnings({ "java:S6541", "java:S3776", "java:S135" }) // ignore complexity
   private void getAnchorLegacyMetadataFromRel(ValueMap resourceProps, Element element) {
     // Check href attribute - do not change elements with no href or links to anchor names
     String href = element.getAttributeValue("href");
@@ -403,7 +405,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    *         Return empty list to remove this element.
    *         Return list with other content to replace element with new content.
    */
-  private List<Content> rewriteImage(Element element) {
+  private List<Content> rewriteImage(@NotNull Element element) {
 
     // resolve media metadata from DOM element
     Media media = getImageMedia(element);
@@ -413,9 +415,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
     // return modified element
     List<Content> content = new ArrayList<>();
-    if (imageElement != null) {
-      content.add(imageElement);
-    }
+    content.add(imageElement);
     return content;
   }
 
@@ -424,7 +424,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param element DOM element
    * @return Media metadata
    */
-  private Media getImageMedia(Element element) {
+  private Media getImageMedia(@NotNull Element element) {
     String ref = element.getAttributeValue("src");
     if (StringUtils.isNotEmpty(ref)) {
       ref = unexternalizeImageRef(ref);
@@ -438,7 +438,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param element Original element
    * @return Image element or null if media reference is invalid
    */
-  private Element buildImageElement(Media media, Element element) {
+  private Element buildImageElement(@NotNull Media media, @NotNull Element element) {
     if (media.isValid()) {
       element.setAttribute("src", media.getUrl());
     }
@@ -458,8 +458,8 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
       // decode if required
       unexternalizedRef = decodeIfEncoded(unexternalizedRef);
 
-      // TODO: implementation has to be aligned with MediaSource implementations!
       // remove default servlet extension that is needed for inline images in RTE
+      // note: implementation might not fit for all MediaSource implementations!
       unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/" + JcrConstants.JCR_CONTENT + ".default");
       unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/_jcr_content.default");
     }
