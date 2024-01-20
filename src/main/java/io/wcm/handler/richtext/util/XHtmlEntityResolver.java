@@ -34,6 +34,7 @@ import org.xml.sax.SAXException;
  * Entity resolver for XHtml DTD and Entities.
  * Loads XHtml resources/entity set from package de.gedas.day.gcq.richtext.xhtml.
  */
+@SuppressWarnings("java:S6548") // singleton is fine here
 final class XHtmlEntityResolver implements EntityResolver {
 
   private static final XHtmlEntityResolver INSTANCE = new XHtmlEntityResolver();
