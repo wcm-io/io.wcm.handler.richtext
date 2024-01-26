@@ -141,7 +141,7 @@ public final class RichTextUtil {
    * @return Root element with parsed xhtml content
    * @throws JDOMException Is thrown if the text could not be parsed as XHTML
    */
-  public static Element parseText(@NotNull String text) throws JDOMException {
+  public static @NotNull Element parseText(@NotNull String text) throws JDOMException {
     return parseText(text, false);
   }
 
@@ -178,7 +178,7 @@ public final class RichTextUtil {
       return doc.getRootElement();
     }
     catch (IOException ex) {
-      throw new RuntimeException("Error parsing XHTML fragment.", ex);
+      throw new IllegalArgumentException("Error parsing XHTML fragment.", ex);
     }
 
   }
@@ -199,7 +199,10 @@ public final class RichTextUtil {
    * @param parent Parent element
    * @param rewriteContentHandler Rewrite content handler
    */
-  @SuppressWarnings("PMD.EmptyControlStatement")
+  @SuppressWarnings({
+      "PMD.EmptyControlStatement",
+      "java:S3776"  // ignore complexity
+  })
   public static void rewriteContent(@NotNull Element parent, @NotNull RewriteContentHandler rewriteContentHandler) {
 
     // iterate through content list and build new content list

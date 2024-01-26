@@ -68,16 +68,16 @@ public final class RichText {
   }
 
   /**
-   * @return Formatted markup as DOM elements
+   * @return Formatted markup as DOM elements or empty collection.
    */
-  public Collection<Content> getContent() {
+  public @Nullable Collection<Content> getContent() {
     return this.content;
   }
 
   /**
    * @return Formatted markup
    */
-  public String getMarkup() {
+  public @Nullable String getMarkup() {
     if (!isValid()) {
       return null;
     }

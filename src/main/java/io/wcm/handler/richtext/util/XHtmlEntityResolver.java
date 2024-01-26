@@ -25,6 +25,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -33,6 +34,7 @@ import org.xml.sax.SAXException;
  * Entity resolver for XHtml DTD and Entities.
  * Loads XHtml resources/entity set from package de.gedas.day.gcq.richtext.xhtml.
  */
+@SuppressWarnings("java:S6548") // singleton is fine here
 final class XHtmlEntityResolver implements EntityResolver {
 
   private static final XHtmlEntityResolver INSTANCE = new XHtmlEntityResolver();
@@ -51,7 +53,7 @@ final class XHtmlEntityResolver implements EntityResolver {
    * XHtmlEntityResolver instance.
    * @return XHtmlEntityResolver instance.
    */
-  public static XHtmlEntityResolver getInstance() {
+  public static @NotNull XHtmlEntityResolver getInstance() {
     return INSTANCE;
   }
 

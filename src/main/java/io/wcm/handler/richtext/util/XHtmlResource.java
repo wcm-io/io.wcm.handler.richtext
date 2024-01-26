@@ -19,6 +19,8 @@
  */
 package io.wcm.handler.richtext.util;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Definition of XHTML resources.
  */
@@ -68,7 +70,7 @@ enum XHtmlResource {
    * Public Id
    * @return Public Id
    */
-  public String getPublicId() {
+  public @NotNull String getPublicId() {
     return this.publicId;
   }
 
@@ -76,7 +78,7 @@ enum XHtmlResource {
    * System Id
    * @return System Id
    */
-  public String getSystemId() {
+  public @NotNull String getSystemId() {
     return this.systemId;
   }
 
@@ -84,7 +86,7 @@ enum XHtmlResource {
    * Local filename
    * @return Local filename
    */
-  public String getFilename() {
+  public @NotNull String getFilename() {
     return this.filename;
   }
 

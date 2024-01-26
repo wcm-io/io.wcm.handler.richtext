@@ -36,6 +36,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Text;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,12 +74,12 @@ public final class RichTextHandlerImpl implements RichTextHandler {
   private List<RewriteContentHandler> rewriteContentHandlers;
 
   @Override
-  public @NotNull RichTextBuilder get(Resource resource) {
+  public @NotNull RichTextBuilder get(@Nullable Resource resource) {
     return new RichTextBuilderImpl(resource, this);
   }
 
   @Override
-  public @NotNull RichTextBuilder get(String text) {
+  public @NotNull RichTextBuilder get(@Nullable String text) {
     return new RichTextBuilderImpl(text, this);
   }
 
@@ -165,7 +166,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
   }
 
   @Override
-  public boolean isEmpty(String text) {
+  public boolean isEmpty(@Nullable String text) {
     return RichTextUtil.isEmpty(text);
   }
 
@@ -177,7 +178,7 @@ public final class RichTextHandlerImpl implements RichTextHandler {
         for (Class<? extends RewriteContentHandler> clazz : config.getRewriteContentHandlers()) {
           RewriteContentHandler rewriter = adaptable.adaptTo(clazz);
           if (rewriter == null) {
-            throw new RuntimeException("Unable to adapt " + adaptable.getClass() + " to " + clazz.getName() + ". "
+            throw new IllegalStateException("Unable to adapt " + adaptable.getClass() + " to " + clazz.getName() + ". "
                 + "Make sure the class is a Sling Model and adaptable from Resource and SlingHttpServletRequest.");
           }
           rewriteContentHandlers.add(rewriter);

@@ -21,6 +21,7 @@ package io.wcm.handler.richtext;
 
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -40,7 +41,7 @@ public interface RichTextHandler {
    * @return Rich text builder
    */
   @NotNull
-  RichTextBuilder get(Resource resource);
+  RichTextBuilder get(@Nullable Resource resource);
 
   /**
    * Build formatter text from given raw text string.
@@ -48,7 +49,7 @@ public interface RichTextHandler {
    * @return Rich text builder
    */
   @NotNull
-  RichTextBuilder get(String text);
+  RichTextBuilder get(@Nullable String text);
 
   /**
    * Check if the given formatted text block is empty. A text block containing only one paragraph element and
@@ -57,6 +58,6 @@ public interface RichTextHandler {
    * @param text XHTML text string (root element not needed)
    * @return true if text block is empty
    */
-  boolean isEmpty(String text);
+  boolean isEmpty(@Nullable String text);
 
 }
