@@ -252,8 +252,7 @@ class RichTextUtilTest {
     public List<Content> rewriteElement(Element element) {
 
       if (StringUtils.equals(element.getName(), "to-remove")) {
-        List<Content> content = new ArrayList<Content>();
-        return content;
+        return new ArrayList<Content>();
       }
 
       else if (StringUtils.equals(element.getName(), "to-keep")) {
