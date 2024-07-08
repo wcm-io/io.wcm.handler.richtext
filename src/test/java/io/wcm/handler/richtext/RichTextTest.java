@@ -77,7 +77,7 @@ class RichTextTest {
   }
 
   @Test
-  void testToString() throws Exception {
+  void testToString() {
     RichText underTest = new RichText(richTextRequest, null);
     assertEquals("RichText[richTextRequest=RichTextRequest[]]", underTest.toString());
   }
