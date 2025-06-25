@@ -39,9 +39,11 @@ import io.wcm.handler.richtext.TextMode;
 
 /**
  * Generic resource-based model for rendering formatted rich text.
+ *
  * <p>
  * Optional use parameters when referencing model from Sightly template:
  * </p>
+ *
  * <ul>
  * <li><code>propertyName</code>: Property name in which the text is stored in the resource</li>
  * <li><code>isRichText</code>: Set to false if text to format is plain text.</li>

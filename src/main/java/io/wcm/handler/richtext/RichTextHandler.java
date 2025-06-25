@@ -26,6 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Manages XHTML rich text fragment formatting.
+ *
  * <p>
  * The interface is implemented by a Sling Model. You can adapt from
  * {@link org.apache.sling.api.SlingHttpServletRequest} or {@link org.apache.sling.api.resource.Resource} to get a
