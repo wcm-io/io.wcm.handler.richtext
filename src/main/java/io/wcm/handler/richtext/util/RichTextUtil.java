@@ -164,6 +164,7 @@ public final class RichTextUtil {
 
       if (xhtmlEntities) {
         saxBuilder.setEntityResolver(XHtmlEntityResolver.getInstance());
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
       }
 
       // XXE prevention
