@@ -202,6 +202,7 @@ class RichTextUtilTest {
 
     // ensure our test XML is valid and could be parsed by an unprotected SAXBuilder
     SAXBuilder ownSaxBuilder = new SAXBuilder();
+    ownSaxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
     assertNotNull(ownSaxBuilder.build(new StringReader(xml)));
 
     // but parsing XML with any DOCTYPE declaration using RichTextUtil will fail
