@@ -48,6 +48,7 @@ public final class RichTextRequest {
   private ValueMap resourceProperties;
 
   /**
+   * Constructor.
    * @param resource Resource containing rich text
    * @param text Raw rich text
    * @param urlMode URL mode
@@ -69,6 +70,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the resource containing rich text.
    * @return Resource containing rich text
    */
   public @Nullable Resource getResource() {
@@ -76,6 +78,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the raw rich text.
    * @return Raw rich text
    */
   public @Nullable String getText() {
@@ -83,6 +86,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the URL mode.
    * @return URL mode
    */
   public @Nullable UrlMode getUrlMode() {
@@ -90,6 +94,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the text mode.
    * @return Text mode
    */
   public @Nullable TextMode getTextMode() {
@@ -97,6 +102,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the media arguments.
    * @return Media arguments
    */
   public @Nullable MediaArgs getMediaArgs() {
@@ -104,6 +110,7 @@ public final class RichTextRequest {
   }
 
   /**
+   * Gets the properties from resource containing rich text.
    * @return Properties from resource containing rich text. The value map is a copy
    *         of the original map so it is safe to change the property values contained in the map.
    */
