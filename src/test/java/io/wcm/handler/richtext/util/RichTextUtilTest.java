@@ -202,6 +202,7 @@ class RichTextUtilTest {
 
     // ensure our test XML is valid and could be parsed by an unprotected SAXBuilder
     SAXBuilder ownSaxBuilder = new SAXBuilder();
+    ownSaxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
     assertNotNull(ownSaxBuilder.build(new StringReader(xml)));
 
     // but parsing XML with any DOCTYPE declaration using RichTextUtil will fail
@@ -252,8 +253,7 @@ class RichTextUtilTest {
     public List<Content> rewriteElement(Element element) {
 
       if (StringUtils.equals(element.getName(), "to-remove")) {
-        List<Content> content = new ArrayList<Content>();
-        return content;
+        return new ArrayList<Content>();
       }
 
       else if (StringUtils.equals(element.getName(), "to-keep")) {

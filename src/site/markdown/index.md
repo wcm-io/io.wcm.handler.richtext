@@ -64,7 +64,7 @@ Sources: https://github.com/wcm-io/io.wcm.handler.richtext
 [general-concepts]: general-concepts.html
 [rte-link-plugin]: rte-link-plugin.html
 [apidocs]: apidocs/
-[changelog]: changes-report.html
+[changelog]: changes.html
 [link-handler]: ../link/
 [media-handler]: ../media/
 [ui-package]: apidocs/io/wcm/handler/richtext/ui/package-summary.html

@@ -30,6 +30,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 /**
  * Allows to rewrite DOM elements and text elements.
+ *
  * <p>
  * If used for {@link io.wcm.handler.richtext.spi.RichTextHandlerConfig} this interface has to be
  * implemented by a Sling Model class. The adaptables should be

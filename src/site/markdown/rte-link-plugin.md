@@ -11,8 +11,7 @@ The wcm.io RichText Handler includes a plugin for the [AEM Rich Text Editor (RTE
 
 To enable plugin you have to disable the AEM built-in link (`links`) plugin and instead enable the wcm.io RichText Handler link plugin (`wcmio-links`):
 
-```json
-// Configure rich text plugins
+```json-jcr
 "rtePlugins": {
   "links": {
     "features": "-"
@@ -29,7 +28,7 @@ To enable plugin you have to disable the AEM built-in link (`links`) plugin and 
 
 Within the UI section RTE configuration where the RTE toolbars are defined you have to replace the references to the `links` plugin with `wcmio-links`:
 
-```json
+```json-jcr
 "uiSettings": {
   "cui": {
     "inline": {
@@ -39,7 +38,6 @@ Within the UI section RTE configuration where the RTE toolbars are defined you h
         "wcmio-links#unlink",
         // ...
         ]
-      }
     },
     "fullscreen": {
       "toolbar": [

@@ -45,6 +45,7 @@ public final class RichText {
   private final List<Content> content;
 
   /**
+   * Constructor.
    * @param richTextRequest Rich text request
    * @param content Content
    */
@@ -54,6 +55,7 @@ public final class RichText {
   }
 
   /**
+   * Gets the rich text request.
    * @return Rich text request
    */
   public @NotNull RichTextRequest getRichTextRequest() {
@@ -61,6 +63,7 @@ public final class RichText {
   }
 
   /**
+   * Checks if the rich text is valid.
    * @return True if rich text is valid and not empty
    */
   public boolean isValid() {
@@ -68,6 +71,7 @@ public final class RichText {
   }
 
   /**
+   * Gets the formatted markup as DOM elements.
    * @return Formatted markup as DOM elements or empty collection.
    */
   public @Nullable Collection<Content> getContent() {
@@ -75,6 +79,7 @@ public final class RichText {
   }
 
   /**
+   * Gets the formatted markup as a string.
    * @return Formatted markup
    */
   public @Nullable String getMarkup() {
