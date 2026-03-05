@@ -71,7 +71,9 @@ import io.wcm.wcm.commons.contenttype.FileExtension;
 /**
  * Default implementation of {@link RewriteContentHandler}.
  */
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class })
+@Model(adaptables = {
+    SlingHttpServletRequest.class, Resource.class
+})
 public final class DefaultRewriteContentHandler implements RewriteContentHandler {
 
   @Self
@@ -103,8 +105,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
       "i",
       "ul",
       "ol",
-      "li"
-      );
+      "li");
 
   /**
    * Checks if the given element has to be rewritten.
@@ -115,7 +116,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    *         Return list with other content to replace element with new content.
    */
   @Override
-  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
+  @SuppressWarnings({
+      "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168"
+  })
   public @Nullable List<Content> rewriteElement(@NotNull Element element) {
 
     // rewrite anchor elements
@@ -307,7 +310,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param resourceProps ValueMap to write link metadata to
    * @param element Link element
    */
-  @SuppressWarnings({ "java:S6541", "java:S3776", "java:S135" }) // ignore complexity
+  @SuppressWarnings({
+      "java:S6541", "java:S3776", "java:S135"
+  }) // ignore complexity
   private void getAnchorLegacyMetadataFromRel(ValueMap resourceProps, Element element) {
     // Check href attribute - do not change elements with no href or links to anchor names
     String href = element.getAttributeValue("href");
@@ -480,7 +485,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   }
 
   @Override
-  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
+  @SuppressWarnings({
+      "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168"
+  })
   public @Nullable List<Content> rewriteText(@NotNull Text text) {
     // nothing to do with text element
     return null;

@@ -195,7 +195,9 @@ class RichTextUtilTest {
    * @param xhtmlEntities Parse with XHTML entities
    */
   @ParameterizedTest
-  @ValueSource(booleans = { true, false })
+  @ValueSource(booleans = {
+      true, false
+  })
   void testInjectDoctype_WithoutXhtmlEntities(boolean xhtmlEntities) throws Exception {
     String xml = "<!DOCTYPE foo [ <!ELEMENT foo ANY > ]>\n"
         + "<foo></foo>";

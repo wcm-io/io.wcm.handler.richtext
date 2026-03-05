@@ -176,6 +176,7 @@ class RichTextHandlerImplTest {
   @Test
   void testContentWithCustomRewriterContentHandler() {
     context.registerService(RichTextHandlerConfig.class, new RichTextHandlerConfig() {
+
       @Override
       public List<Class<? extends RewriteContentHandler>> getRewriteContentHandlers() {
         return List.of(DefaultRewriteContentHandler.class, CustomRewriteContentHandler.class);
@@ -188,7 +189,9 @@ class RichTextHandlerImplTest {
   }
 
 
-  @Model(adaptables = { SlingHttpServletRequest.class, Resource.class })
+  @Model(adaptables = {
+      SlingHttpServletRequest.class, Resource.class
+  })
   public static class CustomRewriteContentHandler implements RewriteContentHandler {
 
     @Override
