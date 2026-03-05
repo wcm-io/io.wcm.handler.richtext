@@ -49,16 +49,15 @@ public final class RichTextUtil {
 
   private static final int EMPTYTEXT_DEFAULT_TRESHOLD = 20;
 
-  private static final String XHTML_ENTITY_DEF =
-      "<!ENTITY % HTMLlat1 PUBLIC \"" + XHtmlResource.ENTITIES_LAT1.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_LAT1.getSystemId() + "\">"
-          + "%HTMLlat1;"
-          + "<!ENTITY % HTMLsymbol PUBLIC \"" + XHtmlResource.ENTITIES_SYMBOL.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_SYMBOL.getSystemId() + "\">"
-          + "%HTMLsymbol;"
-          + "<!ENTITY % HTMLspecial PUBLIC \"" + XHtmlResource.ENTITIES_SPECIAL.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_SPECIAL.getSystemId() + "\">"
-          + "%HTMLspecial;";
+  private static final String XHTML_ENTITY_DEF = "<!ENTITY % HTMLlat1 PUBLIC \"" + XHtmlResource.ENTITIES_LAT1.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_LAT1.getSystemId() + "\">"
+      + "%HTMLlat1;"
+      + "<!ENTITY % HTMLsymbol PUBLIC \"" + XHtmlResource.ENTITIES_SYMBOL.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_SYMBOL.getSystemId() + "\">"
+      + "%HTMLsymbol;"
+      + "<!ENTITY % HTMLspecial PUBLIC \"" + XHtmlResource.ENTITIES_SPECIAL.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_SPECIAL.getSystemId() + "\">"
+      + "%HTMLspecial;";
 
   /*
    * Pattern that matches with all characters that are not allowed in XML 1.0 (https://www.w3.org/TR/REC-xml/#charsets).
@@ -155,8 +154,7 @@ public final class RichTextUtil {
   public static @NotNull Element parseText(@NotNull String text, boolean xhtmlEntities) throws JDOMException {
 
     // add root element, remove invalid chars from input text
-    String xhtmlString =
-        (xhtmlEntities ? "<!DOCTYPE root [" + XHTML_ENTITY_DEF + "]>" : "")
+    String xhtmlString = (xhtmlEntities ? "<!DOCTYPE root [" + XHTML_ENTITY_DEF + "]>" : "")
         + "<root>" + removeCharsNotAllowedInXML10(text) + "</root>";
 
     try {
@@ -202,7 +200,7 @@ public final class RichTextUtil {
    */
   @SuppressWarnings({
       "PMD.EmptyControlStatement",
-      "java:S3776"  // ignore complexity
+      "java:S3776" // ignore complexity
   })
   public static void rewriteContent(@NotNull Element parent, @NotNull RewriteContentHandler rewriteContentHandler) {
 
