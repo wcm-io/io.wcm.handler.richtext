@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
@@ -122,19 +123,19 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   public @Nullable List<Content> rewriteElement(@NotNull Element element) {
 
     // rewrite anchor elements
-    if (StringUtils.equalsIgnoreCase(element.getName(), "a")) {
+    if (Strings.CI.equals(element.getName(), "a")) {
       return rewriteAnchor(element);
     }
 
     // rewrite image elements
-    else if (StringUtils.equalsIgnoreCase(element.getName(), "img")) {
+    else if (Strings.CI.equals(element.getName(), "img")) {
       return rewriteImage(element);
     }
 
     // detect BR elements and turn those into "self-closing" elements
     // since the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
-    else if (StringUtils.equalsIgnoreCase(element.getName(), "br")) {
+    else if (Strings.CI.equals(element.getName(), "br")) {
       if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
@@ -252,7 +253,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
         String value = attribute.getValue();
         if (StringUtils.isNotEmpty(value)) {
           String property = DataPropertyUtil.toHeadlessCamelCaseName(attribute.getName());
-          if (StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) {
+          if (Strings.CS.startsWith(value, "[") && Strings.CS.endsWith(value, "]")) {
             try {
               String[] values = OBJECT_MAPPER.readValue(value, String[].class);
               resourceProps.put(property, values);
@@ -374,7 +375,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     for (Class<? extends LinkType> candidateClass : linkHandlerConfig.getLinkTypes()) {
       LinkType candidate = AdaptTo.notNull(adaptable, candidateClass);
       if (StringUtils.isNotEmpty(linkTypeString)) {
-        if (StringUtils.equals(linkTypeString, candidate.getId())) {
+        if (Strings.CS.equals(linkTypeString, candidate.getId())) {
           linkType = candidate;
           break;
         }
@@ -392,7 +393,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     // workaround: strip off ".html" extension if it was added automatically by the RTE
     if (linkType instanceof InternalLinkType || linkType instanceof MediaLinkType) {
       String htmlSuffix = "." + FileExtension.HTML;
-      if (StringUtils.endsWith(href, htmlSuffix)) {
+      if (Strings.CS.endsWith(href, htmlSuffix)) {
         href = StringUtils.substringBeforeLast(href, htmlSuffix);
       }
     }
@@ -465,8 +466,8 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
       // remove default servlet extension that is needed for inline images in RTE
       // note: implementation might not fit for all MediaSource implementations!
-      unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/" + JcrConstants.JCR_CONTENT + ".default");
-      unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/_jcr_content.default");
+      unexternalizedRef = Strings.CS.removeEnd(unexternalizedRef, "/" + JcrConstants.JCR_CONTENT + ".default");
+      unexternalizedRef = Strings.CS.removeEnd(unexternalizedRef, "/_jcr_content.default");
     }
 
     return unexternalizedRef;
@@ -478,7 +479,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @return Decoded value
    */
   private String decodeIfEncoded(String value) {
-    if (StringUtils.contains(value, "%")) {
+    if (Strings.CS.contains(value, "%")) {
       return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
     return value;
