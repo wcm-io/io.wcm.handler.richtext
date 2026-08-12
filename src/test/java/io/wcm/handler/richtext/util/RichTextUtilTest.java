@@ -29,7 +29,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.jdom2.Content;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -254,37 +254,37 @@ class RichTextUtilTest {
     @Override
     public List<Content> rewriteElement(Element element) {
 
-      if (StringUtils.equals(element.getName(), "to-remove")) {
+      if (Strings.CS.equals(element.getName(), "to-remove")) {
         return new ArrayList<Content>();
       }
 
-      else if (StringUtils.equals(element.getName(), "to-keep")) {
+      else if (Strings.CS.equals(element.getName(), "to-keep")) {
         List<Content> content = new ArrayList<Content>();
         content.add(element);
         return content;
       }
 
-      else if (StringUtils.equals(element.getName(), "to-keep-attribute")) {
+      else if (Strings.CS.equals(element.getName(), "to-keep-attribute")) {
         List<Content> content = new ArrayList<Content>();
         element.setAttribute("attr", "testx");
         content.add(element);
         return content;
       }
 
-      else if (StringUtils.equals(element.getName(), "to-replace-single")) {
+      else if (Strings.CS.equals(element.getName(), "to-replace-single")) {
         List<Content> content = new ArrayList<Content>();
         content.add(new Element("replaced-element").addContent(element.cloneContent()));
         return content;
       }
 
-      else if (StringUtils.equals(element.getName(), "to-replace-multiple")) {
+      else if (Strings.CS.equals(element.getName(), "to-replace-multiple")) {
         List<Content> content = new ArrayList<Content>();
         content.add(new Element("replaced-element-1"));
         content.add(new Element("replaced-element-2"));
         return content;
       }
 
-      else if (StringUtils.equals(element.getName(), "to-replace-once")) {
+      else if (Strings.CS.equals(element.getName(), "to-replace-once")) {
         if (!mReplaceOnce) {
           List<Content> content = new ArrayList<Content>();
           content.add(new Element("replaced-element-once").addContent(element.cloneContent()));

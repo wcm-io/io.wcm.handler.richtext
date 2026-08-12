@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -104,11 +105,11 @@ public final class RichTextUtil {
     }
 
     // replace all whitespaces and nbsp's
-    String cleanedText = StringUtils.replace(text, " ", "");
-    cleanedText = StringUtils.replace(cleanedText, "&#160;", "");
-    cleanedText = StringUtils.replace(cleanedText, "&nbsp;", "");
-    cleanedText = StringUtils.replace(cleanedText, "\n", "");
-    cleanedText = StringUtils.replace(cleanedText, "\r", "");
+    String cleanedText = Strings.CS.replace(text, " ", "");
+    cleanedText = Strings.CS.replace(cleanedText, "&#160;", "");
+    cleanedText = Strings.CS.replace(cleanedText, "&nbsp;", "");
+    cleanedText = Strings.CS.replace(cleanedText, "\n", "");
+    cleanedText = Strings.CS.replace(cleanedText, "\r", "");
     return StringUtils.isEmpty(cleanedText) || "<p></p>".equals(cleanedText);
   }
 
