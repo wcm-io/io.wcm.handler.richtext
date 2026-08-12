@@ -95,11 +95,12 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   };
 
   /**
-   * List of all HTML tag names that are void elements, i.e. have no closing tag and are expected to be
+   * List of all HTML tag names that are void elements, i.e., have no closing tag and are expected to be
    * rendered "self-closing" (e.g. {@code <br/>}).
    * All other tags must not be rendered "self-closing" to avoid interpretation errors in browsers.
+   * See also: <a href="https://html.spec.whatwg.org/multipage/syntax.html#elements-2">HTML Spec &quot;Elements&quot;</a>.
    */
-  private static final Set<String> SELFCLOSING_TAGS = Set.of(
+  private static final Set<String> VOID_ELEMENTS = Set.of(
       "area",
       "base",
       "br",
@@ -142,7 +143,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     // detect void elements and remove any content to keep them "self-closing"
     // since e.g. the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
-    else if (SELFCLOSING_TAGS.contains(StringUtils.lowerCase(element.getName()))) {
+    else if (VOID_ELEMENTS.contains(StringUtils.lowerCase(element.getName()))) {
       if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
