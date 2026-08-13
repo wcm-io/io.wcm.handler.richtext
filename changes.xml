@@ -31,7 +31,7 @@
       <action type="update" dev="henrykuijpers" issue="29">
         DefaultRewriteContentHandler: Invert the list of non-self-closing tags to a list of self-closing tags/void elements (so we don't miss any non-self-closing tag).
       </action>
-      <action type="update" dev="sseifert">
+      <action type="update" dev="sseifert" issue="31">
         DefaultRewriteContentHandler: Ensure StringUtils.lowerCase is used with Locale.ROOT to avoid locale-specific behavior.
       </action>
     </release>
