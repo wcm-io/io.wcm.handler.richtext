@@ -96,9 +96,10 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
   /**
    * List of all HTML tag names that are void elements, i.e., have no closing tag and are expected to be
-   * rendered "self-closing" (e.g. {@code <br/>}).
+   * rendered "self-closing" (e.g. &lt;br/&gt;).
    * All other tags must not be rendered "self-closing" to avoid interpretation errors in browsers.
-   * See also: <a href="https://html.spec.whatwg.org/multipage/syntax.html#elements-2">HTML Spec &quot;Elements&quot;</a>.
+   * See also: <a href="https://html.spec.whatwg.org/multipage/syntax.html#elements-2">HTML Spec
+   * &quot;Elements&quot;</a>.
    */
   private static final Set<String> VOID_ELEMENTS = Set.of(
       "area",
