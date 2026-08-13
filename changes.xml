@@ -25,11 +25,14 @@
   <body>
 
     <release version="2.1.0" date="not released">
+      <action type="update" dev="sseifert">
+        Switch to AEM 6.5.24 as minimum version (also compatible with AEM 6.6.2 / AEM 6.5 LTS SP2 and AEMaaCS).
+      </action>
       <action type="update" dev="henrykuijpers" issue="29">
         DefaultRewriteContentHandler: Invert the list of non-self-closing tags to a list of self-closing tags/void elements (so we don't miss any non-self-closing tag).
       </action>
       <action type="update" dev="sseifert">
-        Switch to AEM 6.5.24 as minimum version (also compatible with AEM 6.6.2 / AEM 6.5 LTS SP2 and AEMaaCS).
+        DefaultRewriteContentHandler: Ensure StringUtils.lowerCase is used with Locale.ROOT to avoid locale-specific behavior.
       </action>
     </release>
 

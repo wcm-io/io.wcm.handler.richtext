@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -144,7 +145,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     // detect void elements and remove any content to keep them "self-closing"
     // since e.g. the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
-    else if (VOID_ELEMENTS.contains(StringUtils.lowerCase(element.getName()))) {
+    else if (VOID_ELEMENTS.contains(StringUtils.lowerCase(element.getName(), Locale.ROOT))) {
       if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
