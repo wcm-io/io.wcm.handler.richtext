@@ -96,10 +96,19 @@ class RichTextUtilTest {
     assertEquals(1, p2.getAttributes().size(), "p2-attrs");
     assertEquals("center", p2.getAttributeValue("align"), "p2-align");
 
+    // parse html-style br tag
+    Element brElement = RichTextUtil.parseText("<p>Test<br>Test</p>");
+    Element p3 = (Element)brElement.getContent().get(0);
+    assertEquals("p", p3.getName(), "p3-name");
+    assertEquals(3, p3.getContentSize(), "p3-child-count");
+    assertEquals("Test", ((Text)p3.getContent().get(0)).getText(), "p3-text-1");
+    assertEquals("br", ((Element)p3.getContent().get(1)).getName(), "p3-br");
+    assertEquals("Test", ((Text)p3.getContent().get(2)).getText(), "p3-text-2");
+
     // parse invalid xhtml
     boolean exception = false;
     try {
-      RichTextUtil.parseText("Der <br>Jodelkaiser");
+      RichTextUtil.parseText("Der <test");
     }
     catch (JDOMException ex) {
       exception = true;

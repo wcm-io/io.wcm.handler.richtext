@@ -71,6 +71,7 @@ public final class RichTextUtil {
       + "\uE000-\uFFFD"
       + "\ud800\udc00-\udbff\udfff"
       + "]");
+  private static final Pattern HTML_BR_TAG = Pattern.compile("(?i)<br(\\s*)>");
 
   /**
    * Check if the given formatted text block is empty.
@@ -155,8 +156,9 @@ public final class RichTextUtil {
   public static @NotNull Element parseText(@NotNull String text, boolean xhtmlEntities) throws JDOMException {
 
     // add root element, remove invalid chars from input text
+    String normalizedText = normalizeHtmlBrTag(text);
     String xhtmlString = (xhtmlEntities ? "<!DOCTYPE root [" + XHTML_ENTITY_DEF + "]>" : "")
-        + "<root>" + removeCharsNotAllowedInXML10(text) + "</root>";
+        + "<root>" + removeCharsNotAllowedInXML10(normalizedText) + "</root>";
 
     try {
       SAXBuilder saxBuilder = new SAXBuilder();
@@ -191,6 +193,10 @@ public final class RichTextUtil {
    */
   private static String removeCharsNotAllowedInXML10(String value) {
     return CONTROL_CHARS_NOT_ALLOWED_IN_XML10.matcher(value).replaceAll("");
+  }
+
+  private static String normalizeHtmlBrTag(String value) {
+    return HTML_BR_TAG.matcher(value).replaceAll("<br$1/>");
   }
 
   /**
