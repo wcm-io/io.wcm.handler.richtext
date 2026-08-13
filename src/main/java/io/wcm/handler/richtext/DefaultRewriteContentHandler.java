@@ -95,18 +95,27 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   };
 
   /**
-   * List of all tag names that should not be rendered "self-closing" to avoid interpretation errors in browsers
+   * List of all HTML tag names that are void elements, i.e., have no closing tag and are expected to be
+   * rendered "self-closing" (e.g. &lt;br/&gt;).
+   * All other tags must not be rendered "self-closing" to avoid interpretation errors in browsers.
+   * See also: <a href="https://html.spec.whatwg.org/multipage/syntax.html#elements-2">HTML Spec
+   * &quot;Elements&quot;</a>.
    */
-  private static final Set<String> NONSELFCLOSING_TAGS = Set.of(
-      "div",
-      "span",
-      "strong",
-      "em",
-      "b",
-      "i",
-      "ul",
-      "ol",
-      "li");
+  private static final Set<String> VOID_ELEMENTS = Set.of(
+      "area",
+      "base",
+      "br",
+      "col",
+      "embed",
+      "hr",
+      "img",
+      "input",
+      "link",
+      "meta",
+      "param",
+      "source",
+      "track",
+      "wbr");
 
   /**
    * Checks if the given element has to be rewritten.
@@ -132,10 +141,10 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
       return rewriteImage(element);
     }
 
-    // detect BR elements and turn those into "self-closing" elements
-    // since the otherwise generated <br> </br> structures are illegal and
+    // detect void elements and remove any content to keep them "self-closing"
+    // since e.g. the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
-    else if (Strings.CI.equals(element.getName(), "br")) {
+    else if (VOID_ELEMENTS.contains(StringUtils.lowerCase(element.getName()))) {
       if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
@@ -144,10 +153,8 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
     // detect empty elements and insert at least an empty string to avoid "self-closing" elements
     // that are not handled correctly by most browsers
-    else if (NONSELFCLOSING_TAGS.contains(StringUtils.lowerCase(element.getName()))) {
-      if (element.getContent().isEmpty()) {
-        element.setText("");
-      }
+    else if (element.getContent().isEmpty()) {
+      element.setText("");
       return null;
     }
 
