@@ -73,7 +73,7 @@
     detectCurrentPagePath: function() {
 
       // try get get current page path from ContentFrame (works for IPE and in component edit dialogs)
-      if (Granite && Granite.author && Granite.author.ContentFrame) {
+      if (Granite && Granite.author && Granite.author.ContentFrame && Granite.author.ContentFrame.currentLocation()) {
         return Granite.author.ContentFrame.getContentPath();
       }
 
