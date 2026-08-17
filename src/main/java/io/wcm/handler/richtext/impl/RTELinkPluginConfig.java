@@ -62,6 +62,7 @@ import io.wcm.wcm.commons.contenttype.FileExtension;
     extensions = FileExtension.JSON,
     methods = HttpConstants.METHOD_GET)
 public class RTELinkPluginConfig extends SlingSafeMethodsServlet {
+
   private static final long serialVersionUID = 1L;
 
   static final String SELECTOR = "wcmio-handler-richtext-rte-plugins-links-config";
@@ -78,9 +79,9 @@ public class RTELinkPluginConfig extends SlingSafeMethodsServlet {
 
     LinkHandlerConfig linkHandlerConfig = AdaptTo.notNull(resource, LinkHandlerConfig.class);
     List<LinkType> linkTypes = linkHandlerConfig.getLinkTypes().stream()
-        .map(linkTypeClass -> AdaptTo.notNull(resource, linkTypeClass))
-        .filter(LinkType::hasRichTextPlugin)
-        .collect(Collectors.toList());
+      .map(linkTypeClass -> AdaptTo.notNull(resource, linkTypeClass))
+      .filter(LinkType::hasRichTextPlugin)
+      .collect(Collectors.toList());
 
     Result result = new Result();
 
@@ -133,6 +134,7 @@ public class RTELinkPluginConfig extends SlingSafeMethodsServlet {
 
   @JsonInclude(Include.NON_NULL)
   static class LinkTypeConfig {
+
     private String value;
     private String text;
 

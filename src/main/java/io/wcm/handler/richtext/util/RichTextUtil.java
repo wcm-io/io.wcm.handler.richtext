@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -49,16 +50,15 @@ public final class RichTextUtil {
 
   private static final int EMPTYTEXT_DEFAULT_TRESHOLD = 20;
 
-  private static final String XHTML_ENTITY_DEF =
-      "<!ENTITY % HTMLlat1 PUBLIC \"" + XHtmlResource.ENTITIES_LAT1.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_LAT1.getSystemId() + "\">"
-          + "%HTMLlat1;"
-          + "<!ENTITY % HTMLsymbol PUBLIC \"" + XHtmlResource.ENTITIES_SYMBOL.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_SYMBOL.getSystemId() + "\">"
-          + "%HTMLsymbol;"
-          + "<!ENTITY % HTMLspecial PUBLIC \"" + XHtmlResource.ENTITIES_SPECIAL.getPublicId() + "\" "
-          + "\"" + XHtmlResource.ENTITIES_SPECIAL.getSystemId() + "\">"
-          + "%HTMLspecial;";
+  private static final String XHTML_ENTITY_DEF = "<!ENTITY % HTMLlat1 PUBLIC \"" + XHtmlResource.ENTITIES_LAT1.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_LAT1.getSystemId() + "\">"
+      + "%HTMLlat1;"
+      + "<!ENTITY % HTMLsymbol PUBLIC \"" + XHtmlResource.ENTITIES_SYMBOL.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_SYMBOL.getSystemId() + "\">"
+      + "%HTMLsymbol;"
+      + "<!ENTITY % HTMLspecial PUBLIC \"" + XHtmlResource.ENTITIES_SPECIAL.getPublicId() + "\" "
+      + "\"" + XHtmlResource.ENTITIES_SPECIAL.getSystemId() + "\">"
+      + "%HTMLspecial;";
 
   /*
    * Pattern that matches with all characters that are not allowed in XML 1.0 (https://www.w3.org/TR/REC-xml/#charsets).
@@ -105,11 +105,11 @@ public final class RichTextUtil {
     }
 
     // replace all whitespaces and nbsp's
-    String cleanedText = StringUtils.replace(text, " ", "");
-    cleanedText = StringUtils.replace(cleanedText, "&#160;", "");
-    cleanedText = StringUtils.replace(cleanedText, "&nbsp;", "");
-    cleanedText = StringUtils.replace(cleanedText, "\n", "");
-    cleanedText = StringUtils.replace(cleanedText, "\r", "");
+    String cleanedText = Strings.CS.replace(text, " ", "");
+    cleanedText = Strings.CS.replace(cleanedText, "&#160;", "");
+    cleanedText = Strings.CS.replace(cleanedText, "&nbsp;", "");
+    cleanedText = Strings.CS.replace(cleanedText, "\n", "");
+    cleanedText = Strings.CS.replace(cleanedText, "\r", "");
     return StringUtils.isEmpty(cleanedText) || "<p></p>".equals(cleanedText);
   }
 
@@ -155,8 +155,7 @@ public final class RichTextUtil {
   public static @NotNull Element parseText(@NotNull String text, boolean xhtmlEntities) throws JDOMException {
 
     // add root element, remove invalid chars from input text
-    String xhtmlString =
-        (xhtmlEntities ? "<!DOCTYPE root [" + XHTML_ENTITY_DEF + "]>" : "")
+    String xhtmlString = (xhtmlEntities ? "<!DOCTYPE root [" + XHTML_ENTITY_DEF + "]>" : "")
         + "<root>" + removeCharsNotAllowedInXML10(text) + "</root>";
 
     try {
@@ -202,7 +201,7 @@ public final class RichTextUtil {
    */
   @SuppressWarnings({
       "PMD.EmptyControlStatement",
-      "java:S3776"  // ignore complexity
+      "java:S3776" // ignore complexity
   })
   public static void rewriteContent(@NotNull Element parent, @NotNull RewriteContentHandler rewriteContentHandler) {
 

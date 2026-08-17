@@ -27,10 +27,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
@@ -71,7 +73,9 @@ import io.wcm.wcm.commons.contenttype.FileExtension;
 /**
  * Default implementation of {@link RewriteContentHandler}.
  */
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class })
+@Model(adaptables = {
+    SlingHttpServletRequest.class, Resource.class
+})
 public final class DefaultRewriteContentHandler implements RewriteContentHandler {
 
   @Self
@@ -92,19 +96,27 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
   };
 
   /**
-   * List of all tag names that should not be rendered "self-closing" to avoid interpretation errors in browsers
+   * List of all HTML tag names that are void elements, i.e., have no closing tag and are expected to be
+   * rendered "self-closing" (e.g. &lt;br/&gt;).
+   * All other tags must not be rendered "self-closing" to avoid interpretation errors in browsers.
+   * See also: <a href="https://html.spec.whatwg.org/multipage/syntax.html#elements-2">HTML Spec
+   * &quot;Elements&quot;</a>.
    */
-  private static final Set<String> NONSELFCLOSING_TAGS = Set.of(
-      "div",
-      "span",
-      "strong",
-      "em",
-      "b",
-      "i",
-      "ul",
-      "ol",
-      "li"
-      );
+  private static final Set<String> VOID_ELEMENTS = Set.of(
+      "area",
+      "base",
+      "br",
+      "col",
+      "embed",
+      "hr",
+      "img",
+      "input",
+      "link",
+      "meta",
+      "param",
+      "source",
+      "track",
+      "wbr");
 
   /**
    * Checks if the given element has to be rewritten.
@@ -115,23 +127,25 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    *         Return list with other content to replace element with new content.
    */
   @Override
-  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
+  @SuppressWarnings({
+      "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168"
+  })
   public @Nullable List<Content> rewriteElement(@NotNull Element element) {
 
     // rewrite anchor elements
-    if (StringUtils.equalsIgnoreCase(element.getName(), "a")) {
+    if (Strings.CI.equals(element.getName(), "a")) {
       return rewriteAnchor(element);
     }
 
     // rewrite image elements
-    else if (StringUtils.equalsIgnoreCase(element.getName(), "img")) {
+    else if (Strings.CI.equals(element.getName(), "img")) {
       return rewriteImage(element);
     }
 
-    // detect BR elements and turn those into "self-closing" elements
-    // since the otherwise generated <br> </br> structures are illegal and
+    // detect void elements and remove any content to keep them "self-closing"
+    // since e.g. the otherwise generated <br> </br> structures are illegal and
     // are not handled correctly by Internet Explorers
-    else if (StringUtils.equalsIgnoreCase(element.getName(), "br")) {
+    else if (VOID_ELEMENTS.contains(StringUtils.lowerCase(element.getName(), Locale.ROOT))) {
       if (!element.getContent().isEmpty()) {
         element.removeContent();
       }
@@ -140,10 +154,8 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
     // detect empty elements and insert at least an empty string to avoid "self-closing" elements
     // that are not handled correctly by most browsers
-    else if (NONSELFCLOSING_TAGS.contains(StringUtils.lowerCase(element.getName()))) {
-      if (element.getContent().isEmpty()) {
-        element.setText("");
-      }
+    else if (element.getContent().isEmpty()) {
+      element.setText("");
       return null;
     }
 
@@ -249,7 +261,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
         String value = attribute.getValue();
         if (StringUtils.isNotEmpty(value)) {
           String property = DataPropertyUtil.toHeadlessCamelCaseName(attribute.getName());
-          if (StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) {
+          if (Strings.CS.startsWith(value, "[") && Strings.CS.endsWith(value, "]")) {
             try {
               String[] values = OBJECT_MAPPER.readValue(value, String[].class);
               resourceProps.put(property, values);
@@ -307,7 +319,9 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @param resourceProps ValueMap to write link metadata to
    * @param element Link element
    */
-  @SuppressWarnings({ "java:S6541", "java:S3776", "java:S135" }) // ignore complexity
+  @SuppressWarnings({
+      "java:S6541", "java:S3776", "java:S135"
+  }) // ignore complexity
   private void getAnchorLegacyMetadataFromRel(ValueMap resourceProps, Element element) {
     // Check href attribute - do not change elements with no href or links to anchor names
     String href = element.getAttributeValue("href");
@@ -369,7 +383,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     for (Class<? extends LinkType> candidateClass : linkHandlerConfig.getLinkTypes()) {
       LinkType candidate = AdaptTo.notNull(adaptable, candidateClass);
       if (StringUtils.isNotEmpty(linkTypeString)) {
-        if (StringUtils.equals(linkTypeString, candidate.getId())) {
+        if (Strings.CS.equals(linkTypeString, candidate.getId())) {
           linkType = candidate;
           break;
         }
@@ -387,7 +401,7 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
     // workaround: strip off ".html" extension if it was added automatically by the RTE
     if (linkType instanceof InternalLinkType || linkType instanceof MediaLinkType) {
       String htmlSuffix = "." + FileExtension.HTML;
-      if (StringUtils.endsWith(href, htmlSuffix)) {
+      if (Strings.CS.endsWith(href, htmlSuffix)) {
         href = StringUtils.substringBeforeLast(href, htmlSuffix);
       }
     }
@@ -460,8 +474,8 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
 
       // remove default servlet extension that is needed for inline images in RTE
       // note: implementation might not fit for all MediaSource implementations!
-      unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/" + JcrConstants.JCR_CONTENT + ".default");
-      unexternalizedRef = StringUtils.removeEnd(unexternalizedRef, "/_jcr_content.default");
+      unexternalizedRef = Strings.CS.removeEnd(unexternalizedRef, "/" + JcrConstants.JCR_CONTENT + ".default");
+      unexternalizedRef = Strings.CS.removeEnd(unexternalizedRef, "/_jcr_content.default");
     }
 
     return unexternalizedRef;
@@ -473,14 +487,16 @@ public final class DefaultRewriteContentHandler implements RewriteContentHandler
    * @return Decoded value
    */
   private String decodeIfEncoded(String value) {
-    if (StringUtils.contains(value, "%")) {
+    if (Strings.CS.contains(value, "%")) {
       return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
     return value;
   }
 
   @Override
-  @SuppressWarnings({ "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168" })
+  @SuppressWarnings({
+      "PMD.ReturnEmptyCollectionRatherThanNull", "java:S1168"
+  })
   public @Nullable List<Content> rewriteText(@NotNull Text text) {
     // nothing to do with text element
     return null;

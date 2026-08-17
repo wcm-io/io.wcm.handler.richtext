@@ -18,20 +18,19 @@
   limitations under the License.
   #L%
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.parent_toplevel</artifactId>
-    <version>2.6.2</version>
-    <relativePath/>
+    <version>2.9.0</version>
+    <relativePath />
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.handler.richtext</artifactId>
-  <version>2.0.2</version>
+  <version>2.1.0</version>
   <packaging>jar</packaging>
 
   <name>RichText Handler</name>
@@ -41,15 +40,15 @@
   <scm>
     <connection>scm:git:https://github.com/wcm-io/io.wcm.handler.richtext.git</connection>
     <developerConnection>scm:git:https://github.com/wcm-io/io.wcm.handler.richtext.git</developerConnection>
-    <url>https://github.com/wcm-io/io.wcm.handler.richtext</url>
     <tag>HEAD</tag>
+    <url>https://github.com/wcm-io/io.wcm.handler.richtext</url>
   </scm>
 
   <properties>
     <site.url.module.prefix>handler/richtext</site.url.module.prefix>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2025-11-24T11:33:36Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2026-08-17T08:58:49Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
@@ -63,7 +62,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.handler.url</artifactId>
-      <version>2.0.0</version>
+      <version>2.1.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -100,7 +99,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.wcm.ui.granite</artifactId>
-      <version>1.10.2</version>
+      <version>1.11.10</version>
       <scope>compile</scope>
     </dependency>
 
@@ -132,7 +131,7 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
-      <version>5.6.12</version>
+      <version>5.7.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -203,7 +202,6 @@
           <bnd>
             Sling-Initial-Content: \
               SLING-INF/app-root;overwrite:=true;ignoreImportProviders:=xml;path:=/apps/wcm-io/handler/richtext
-
             <!-- For build compatibility with Java 11 -->
             Import-Package: \
               javax.annotation;version="[0.0,2)",\
