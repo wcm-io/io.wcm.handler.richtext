@@ -24,7 +24,7 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
-    <release version="2.1.0" date="not released">
+    <release version="2.1.1" date="not released">
       <action type="fix" dev="bartessers">
         Fix page properties detection broken by AEM 6.5 LTS ContentFrame change
       </action>
