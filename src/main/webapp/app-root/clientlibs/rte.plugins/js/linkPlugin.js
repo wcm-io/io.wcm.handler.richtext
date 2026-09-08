@@ -71,9 +71,13 @@
      * Detects the current page path. May return null.
      */
     detectCurrentPagePath: function() {
-
-      // try get get current page path from ContentFrame (works for IPE and in component edit dialogs)
-      if (Granite && Granite.author && Granite.author.ContentFrame) {
+      /**
+       * try get get current page path from ContentFrame (works for IPE and in component edit dialogs)
+       * As of AEM 6.5 LTS the ContentFrame is loaded in the page properties dialog but it has no location set.
+       * We need to check if the location is set on the ContentFrame because getContentPath executes
+       * the "replace"-method on the location.
+       */
+      if (Granite && Granite.author && Granite.author.ContentFrame && Granite.author.ContentFrame.currentLocation()) {
         return Granite.author.ContentFrame.getContentPath();
       }
 

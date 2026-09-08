@@ -30,7 +30,7 @@
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.handler.richtext</artifactId>
-  <version>2.1.0</version>
+  <version>2.1.2</version>
   <packaging>jar</packaging>
 
   <name>RichText Handler</name>
@@ -48,7 +48,7 @@
     <site.url.module.prefix>handler/richtext</site.url.module.prefix>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2026-08-17T08:58:49Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2026-09-08T12:37:16Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
